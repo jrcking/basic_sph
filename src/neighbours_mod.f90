@@ -25,33 +25,4 @@ contains
     return
   end subroutine find_neighbours
 
-  subroutine kernel_gradient_correction(i,kg_cf)
-    ! As in Gomez-Gesteira et al, 2012, section 2.8.2
-    integer,intent(in) :: i
-    real,intent(out),dimension(dims,dims) :: kg_cf
-    real :: M11,M12,M22,detM,dw
-    integer :: j,k
-
-    M11 = 0.0
-    M12 = 0.0
-    M22 = 0.0
-    do k=1,nneigh(i)
-       j=neigh_list(i,k)
-       rij(:) = r(i,:) - r(j,:)
-       mrij = max(sqrt(dot_product(rij,rij)),1e-5) !avoid singularity when i=j
-       dw = dkfunc(mrij,h)
-       ! elements of M (only 3 as it is symmetric
-       M11 = M11 - m(j)*dw*rij(1)*rij(1)/(ro(j)*mrij)
-       M12 = M12 - m(j)*dw*rij(1)*rij(2)/(ro(j)*mrij)
-       M22 = M22 - m(j)*dw*rij(2)*rij(2)/(ro(j)*mrij)       
-    end do
-    ! find the inverse of M and allocate into kg_cf
-    detM = 1/(M11*M22 - M12**2.0)
-    kg_cf(1,1) = M22/detM
-    kg_cf(1,2) = -1.0*M12/detM
-    kg_cf(2,1) = kg_cf(1,2)-1.0*M12/detM
-    kg_cf(2,2) = M11/detM
-    return
-  end subroutine kernel_gradient_correction
-
 end module neighbours_mod

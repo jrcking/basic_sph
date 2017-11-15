@@ -1,11 +1,10 @@
 program main
   use particles_mod
   use output_mod
-  use neighbours_mod
-  use evolve_wc_mod
-  use evolve_i_mod
+!  use neighbours_mod
+  use evolve_mod
   use bound_mod
-  use kernel_mod
+!  use kernel_mod
   implicit none
   real :: t
   integer :: i,nt,nt_out
@@ -18,7 +17,7 @@ program main
   call calc_p_from_ro
   call boundaries
   call find_neighbours
-  call calc_ddt_wcsph
+  call calc_ddt
 
   !some final initialisation
   call create_files
@@ -29,7 +28,7 @@ program main
   ! the time loop
   do while(t.le.tmax)
      nt = nt + 1
-!     do nt=1,200
+ !    do nt=1,200
 
      ! write the output every dmp_period
      if(floor(t/dmp_period).ge.nt_out) then
@@ -39,11 +38,7 @@ program main
      call output_simulation_data(nt)
      
      ! evolve the particles
-     if(compressible)then
-        call evolve_wcsph(nt)
-     else
-        call evolve_isph(nt)
-     end if
+     call evolve(nt)
      
      ! write some things to screen
      t=t+dt

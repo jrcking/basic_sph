@@ -38,23 +38,12 @@ contains
     open(unit=13,file="./output/neighbours"//tmp//".out")
 
     ! write position and velocity files
-    if(dims.eq.1)then
-       do i=1,n
-          write(9,*) r(i,1),ro(i)
-          write(10,*) v(i,1)
-       end do
-    else if(dims.eq.2)then
-       do i=1,n!+ng
-          write(9,*) r(i,1),r(i,2)
-          write(10,*) v(i,1),v(i,2)
-       end do
-    else
-       do i=1,n
-          write(9,*) r(i,1),r(i,2),r(i,3)
-          write(10,*) v(i,1),v(i,2),v(i,3)
-       end do
-    end if
-
+    ! assume dims=2 (because I have no intention of going 3d)
+    do i=1,n!+ng
+       write(9,*) r(i,1),r(i,2)
+       write(10,*) v(i,1),v(i,2)
+    end do
+ 
     ! write  density, pressure and # neighbours to files
     do i=1,n!+ng
        write(11,*) p(i)
