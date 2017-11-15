@@ -1,0 +1,19 @@
+20 40			! nx(1),nx(2)
+.true.			! compressible (true = wcsph,false=isph)
+2.5			! tmax
+0.01			! dmp_period
+0.0			! xsph (value represents amount of xsph)
+-0.1			! av_value: value of AV coefficient (-0.1)
+1000.0			! ro_init: initial density
+1.0e-3			! mu: dynamic viscosity (1e-3)
+.false.			! kgc: kernel gradient correction?
+.true.			! t_corr: tensile correction
+0.0 0.0			! rlow
+4.0 8.0			! rhigh
+.true. .true.		! wbc: wall / periodic boundaries
+.true.			! slip: slip / no slip boundaries
+0.0 -9.81		! g (eg. -9.81)
+1.3			! h_ov_spacing:
+0.0 0.0			! pb_low: where to place particles
+1.0 2.0   		! pb_high: ditto
+.false.			! nnf: non-Newtonian fluid?

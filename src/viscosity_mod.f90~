@@ -1,0 +1,40 @@
+module rheology_mod
+  implicit none
+
+contains
+
+  subroutine rheology_newtonian(D_spi,mu,mu_eff)
+    real,intent(in)::D_spi,mu
+    real,intent(out)::mu_eff
+
+    mu_eff = mu
+  end subroutine rheology_newtonian
+
+  subroutine rheology_power_law(D_spi,mu,mu_eff)
+    real,intent(in)::D_spi,mu
+    real,intent(out)::mu_eff
+    integer :: n
+
+    ! power law exponent: <1=shear thinning; >1=shear thickening
+    n = 0.15 !0.15
+    
+    mu_eff = mu*max(D_spi,1e-6)**(n - 1.0)  ! power law
+  end subroutine rheology_power_law
+  
+  subroutine rheology_bingham(D_spi,mu,mu_eff)
+    real,intent(in)::D_spi,mu
+    real,intent(out)::mu_eff
+    real :: tau_yield,alpha
+    
+    ! parameters of bingham fluid
+    tau_yield = 25.0
+    alpha = 1e2
+
+    if (D_spi.le.tau_yield/(mu*alpha)) then
+       mu_eff = mu*alpha
+    else
+       mu_eff = mu + tau_yield/D_spi
+    end if
+  end subroutine rheology_bingham
+
+end module rheology_mod
