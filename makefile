@@ -1,3 +1,5 @@
+f90comp = gfortran
+
 ksph:	./src/particles_mod.f90		\
 	./src/output_mod.f90 		\
 	./src/neighbours_mod.f90	\
@@ -5,7 +7,7 @@ ksph:	./src/particles_mod.f90		\
 	./src/bound_mod.f90		\
 	./src/kernel_mod.f90		\
 	./src/main.f90
-	gfortran -o ksph -g		\
+	$(f90comp) -o ksph -g		\
 	./src/particles_mod.f90		\
 	./src/output_mod.f90 		\
 	./src/neighbours_mod.f90	\

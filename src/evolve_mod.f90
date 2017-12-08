@@ -65,7 +65,6 @@ contains
     
     ! find neighbours
     call find_neighbours
-    
     ! density re-initialisation every 30 time steps
     if(mod(nt,30).eq.0)then
        call density_reinitialisation

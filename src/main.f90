@@ -28,7 +28,7 @@ program main
   ! the time loop
   do while(t.le.tmax)
      nt = nt + 1
- !    do nt=1,200
+   ! do nt=1,200
 
      ! write the output every dmp_period
      if(floor(t/dmp_period).ge.nt_out) then
@@ -49,5 +49,4 @@ program main
   call close_files
   call destroy_particles
 
-  return
 end program main
