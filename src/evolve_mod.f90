@@ -1,3 +1,5 @@
+!! this file is part of Jack King's basic SPH code for simulating a Dam Break
+!! 
 module evolve_mod
   use particles_mod
   use neighbours_mod

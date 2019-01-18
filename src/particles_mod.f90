@@ -1,3 +1,6 @@
+!! this file is part of Jack King's basic SPH code for simulating a Dam Break
+!! 
+
 module particles_mod
   use kernel_mod
   implicit none
@@ -9,10 +12,10 @@ module particles_mod
   real,dimension(dims) :: rlow,rhigh,g,pb_low,pb_high
   integer,dimension(dims) :: nx
   real,dimension(dims) :: rij,vij,gradw
-  real :: mrij
+  real :: mrij,p_space
   real :: dt,tmax,dmp_period
   real :: m,h,ro_init,av_value,h_ov_spacing
-  integer :: n,ng
+  integer :: n,ng,nb
   logical :: slip
 
 contains
@@ -35,7 +38,7 @@ contains
     read(1,*) pb_low
     read(1,*) pb_high
     close(1)
-    
+ 
     return
   end subroutine create_domain
   
@@ -56,9 +59,10 @@ contains
     allocate(nneigh(n+ng))
     allocate(neigh_list(n+ng,n+ng))
 
-    ! particles in each direction
+    ! # particles in each direction
     dx(:)=(pb_high(:)-pb_low(:))/real(nx(:))
     p_space = dx(1)
+
     ! place the particles
     do i=1,n
        j=floor(real(i-1)/real(nx(1)))
@@ -67,25 +71,6 @@ contains
        r(i,:) = pb_low(:) + 0.5*dx(:) + dx(:)*tmp2(:)
     end do
 
-    !put some more particles in a circle higher up!
-    if(.false.)then
-       nc=0          
-       do i=1,n
-          j=floor(real(i-1)/real(nx(1)))
-          tmp2(1)=mod(i-1,nx(1))
-          tmp2(2)=mod(j,nx(2))
-          tmp_x(1) = 0 + 0.5*dx(1) + dx(1)*tmp2(1)
-          tmp_x(2) = 0.75 + 0.5*dx(2) + dx(2)*tmp2(2)
-          tmp_circle = (tmp_x(1) - 0.5)**2 + (tmp_x(2) - 0.875)**2
-          if(tmp_circle.le.0.075**2)then
-             nc=nc+1
-             !write(6,*) "in the circle",nc
-             r(576+nc,:) = tmp_x(:)
-          end if
-       end do
-       write(6,*) "there are ",nc," particles in circle"
-    end if
-    
     ! set other particle properties
     ro(:) = ro_init
     v(:,:) = 0.0

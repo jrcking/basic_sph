@@ -1,3 +1,6 @@
+!! this file is part of Jack King's basic SPH code for simulating a Dam Break
+!! 
+
 module kernel_mod
   implicit none
   real :: pi

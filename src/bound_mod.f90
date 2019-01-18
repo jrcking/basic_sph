@@ -1,3 +1,6 @@
+!! this file is part of Jack King's basic SPH code for simulating a Dam Break
+!! 
+
 module bound_mod
   use particles_mod
   implicit none

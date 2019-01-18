@@ -1,4 +1,4 @@
-20 40			! nx(1),nx(2)
+30 60			! nx(1),nx(2)
 2.5			! tmax
 0.01			! dmp_period
 -0.1			! av_value: value of AV coefficient (-0.1)
